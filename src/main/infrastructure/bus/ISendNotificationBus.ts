@@ -1,3 +1,5 @@
+import { Position } from "../../../main/model/Position";
+
 export interface ISendNotificationBus {
-    NotifyExecution(finalState: string): void;
+    NotifyExecution(finalState: Position): void;
 }

@@ -4,8 +4,8 @@ import {format} from "util";
 import deepEqual = require("deep-equal");
 
 export class Position {
-    private coordinate: Coordinate;
-    private direction: Direction;
+    private _coordinate: Coordinate;
+    private _direction: Direction;
 
     private parseDirection(directionText: string): Direction {
         switch (directionText) {
@@ -23,40 +23,47 @@ export class Position {
     }
 
     constructor(x: number, y: number, directionText: string) {
-        this.coordinate = new Coordinate(x, y);
-        this.direction = this.parseDirection(directionText);
+        this._coordinate = new Coordinate(x, y);
+        this._direction = this.parseDirection(directionText);
     }
 
     turnLeft(): Position {
-        return new Position(this.coordinate.x, this.coordinate.y, this.direction.turnLeft().toString())
+        return new Position(this._coordinate.x, this._coordinate.y, this._direction.turnLeft().toString())
     }
 
     turnRight(): Position {
-        return new Position(this.coordinate.x, this.coordinate.y, this.direction.turnRight().toString())
+        return new Position(this._coordinate.x, this._coordinate.y, this._direction.turnRight().toString())
     }
 
     moveForward() {
         var coordinate: Coordinate = new Coordinate(0, 0);
-        let s = this.direction.enumValue();
+        let s = this._direction.enumValue();
         if (s === "NORTH") {
-            coordinate = this.coordinate.moveNorth()
+            coordinate = this._coordinate.moveNorth()
         } else if (s === "EAST") {
-            coordinate = this.coordinate.moveEast()
+            coordinate = this._coordinate.moveEast()
         } else if (s === "SOUTH") {
-            coordinate = this.coordinate.moveSouth()
+            coordinate = this._coordinate.moveSouth()
         } else if (s === "WEST") {
-            coordinate = this.coordinate.moveWest();
+            coordinate = this._coordinate.moveWest();
         }
-        return new Position(coordinate.x, coordinate.y, this.direction.toString());
+        return new Position(coordinate.x, coordinate.y, this._direction.toString());
     }
 
     toString(): string {
-        return format("%s %s", this.coordinate.toString(), this.direction.toString())
+        return format("%s %s", this._coordinate.toString(), this._direction.toString())
     }
 
     equals(o: Position): boolean {
-        return deepEqual(this.coordinate, o.coordinate) && this.direction === o.direction;
+        return deepEqual(this._coordinate, o._coordinate) && this._direction === o._direction;
+    }
+
+    get coordinate(): Coordinate {
+        return this._coordinate;
     }
 
 
+    get direction(): Direction {
+        return this._direction;
+    }
 }

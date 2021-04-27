@@ -4,6 +4,7 @@ import {ISendNotificationBus} from "./ISendNotificationBus";
 import {IReadMessages} from "../IReadMessages";
 import {IProcessMessages} from "../IProcessMessages";
 import {ISendNotifications} from "../ISendNotifications";
+import { Position } from "../../../main/model/Position";
 
 export class ServiceBus implements IMessageReceivedBus, ISendFinalStateBus, ISendNotificationBus, IReadMessages {
 
@@ -26,7 +27,7 @@ export class ServiceBus implements IMessageReceivedBus, ISendFinalStateBus, ISen
         this.marsRoverSender.sendError();
     }
 
-    NotifyExecution(finalState: string): void {
+    NotifyExecution(finalState: Position): void {
         this.marsRoverSender.send(finalState);
     }
 
